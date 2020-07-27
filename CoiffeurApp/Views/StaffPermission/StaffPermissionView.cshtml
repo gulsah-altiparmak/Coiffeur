@@ -1,0 +1,83 @@
+﻿@using CoiffeurApp.Models.CoiffeurModel
+@model ModelCoiffeur
+@{
+    ViewBag.Title = "StaffPermissionView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-content">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+        <!--begin::Form-->
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Personel İzin Form
+                    </h3>
+                </div>
+            </div>
+        </div>
+        @using (@Html.BeginForm("StaffPermissionView", "StaffPermission", FormMethod.Post, new { @class = "m-form m-form--fit m-form--label-align-right", @id = "m_form_1", enctype = "multipart/form-data" }))
+        {
+            <div class="m-portlet__body">
+
+                @Html.TextBoxFor(m => Model.StaffPermission.PermissionId, new { @class = "form-control m-input p-1 border border-primary", type = "hidden" })
+
+                <div class="col-md-12 float-left">
+                    <div class="form-group m-form__group ">
+                        <label for="exampleSelect1" class="col-form-label">
+                            Personel Seçin
+                        </label>
+                     
+                        @Html.DropDownListFor(m => Model.StaffPermission.StaffId, Model.StaffList.Select(x => new SelectListItem { Text = x.Name + " " + x.Surname, Value = x.UserId.ToString() }), new { @class = "form-control m-input col-form-label border border-primary p-1", @id = "exampleSelect1", @style = "height:30px;" })
+                    </div>
+                </div>
+                <div class="float-left col-md-6">
+                    <div class="form-group m-form__group ">
+                        <label class="col-form-label ">
+                            İzin Başlangıç Tarihi
+                        </label>
+
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+
+                            @Html.TextBoxFor(m => Model.StaffPermission.StartingDate, new { @class = "form-control", @id = "m_datetimepicker_3", @placeholder = "Tarih ve saat seçin" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="float-left col-md-6">
+                    <div class="form-group m-form__group ">
+                        <label class="col-form-label ">
+                            İzin Bitiş Tarihi
+                        </label>
+
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+
+                            @Html.TextBoxFor(m => Model.StaffPermission.EndingDate, new { @class = "form-control", @id = "dtime", @placeholder = "Tarih ve saat seçin" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="col-md-12 float-left">
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-lg-9 ml-lg-auto">
+                                <button type="submit" class="btn btn-success">
+                                    Kaydet
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    Vazgeç
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    </div>
+

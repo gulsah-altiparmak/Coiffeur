@@ -1,0 +1,155 @@
+﻿@using CoiffeurApp.Models.CoiffeurModel
+@model ModelCoiffeur
+@{
+    ViewBag.Title = "GetBookView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-content">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+        <!--begin::Form-->
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Randevu Form
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        @using (@Html.BeginForm("GetBookView", "Book", FormMethod.Post, new { @class = "m-form m-form--fit m-form--label-align-right", @id = "m_form_1", enctype = "multipart/form-data" }))
+        {
+
+
+            @Html.TextBoxFor(m => Model.Book.BookId, new { @class = "form-control m-input p-1 border border-primary", type = "hidden" })
+            <div class="m-portlet__body">
+                <div class="col-md-12 float-left">
+                    <div class="form-group m-form__group ">
+                        <label for="exampleSelect1" class="col-form-label">
+                            Hizmet Seçin
+                        </label>
+                        <div class="m-checkbox-inline">
+                            @for (int i = 0; i < Model.ServiceList.Count; i++)
+                            {
+                                @Html.HiddenFor(m => Model.ServiceList[i].ServiceId)
+
+                                <label class="m-checkbox" id="label-@Model.ServiceList[i].ServiceId">
+                                    @Html.CheckBoxFor(m => Model.ServiceList[i].IsChecked, new
+                                    {
+                                        @id = "check-" + @Model.ServiceList[i].ServiceId,
+                                        @class = "filter-checkbox",
+                                        @onclick = "calculateServicePrice()",
+                                        @data_price = Model.ServiceList[i].ServicePrice,
+                                        @data_id = "filter-checkbox"
+
+                                    })
+                                    @Model.ServiceList[i].Title Ücret: @Model.ServiceList[i].ServicePrice TL
+                                    <span></span>
+                                </label>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 float-left">
+                    <div class="form-group m-form__group ">
+                        <label for="exampleSelect1" class="col-form-label">
+                            Personel Seçin
+                        </label>
+
+                        @Html.DropDownListFor(m => Model.Book.StaffId, Model.StaffList.Select(x => new SelectListItem { Text = x.Name + " " + x.Surname, Value = x.UserId.ToString() }), new { @class = "form-control m-input col-form-label border border-primary p-1", @onchange = "staffChange(this);", @id = "exampleSelect1", @style = "height:30px;" })
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 float-left">
+                    <div class="form-group m-form__group ">
+                        <label for="exampleSelect1" class="col-form-label">
+                            Müşteri Seçin
+                        </label>
+
+                        @Html.DropDownListFor(m => Model.Book.UserId, Model.CustomerList.Select(x => new SelectListItem { Text = x.Name + " " + x.Surname, Value = x.UserId.ToString() }), new { @class = "form-control m-input col-form-label border border-primary p-1", @id = "exampleSelect1", @style = "height:30px;" })
+
+                    </div>
+                </div>
+
+                <div class="float-left col-md-6">
+                    <div class="form-group m-form__group ">
+                        <label class="col-form-label ">
+                            Randevu Başlangıç Tarihi
+                        </label>
+
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+
+                            @Html.TextBoxFor(m => Model.Book.StartingDate, new { @class = "form-control", @id = "m_datetimepicker_1", @placeholder = "Tarih ve saat seçin" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="float-left col-md-6">
+                    <div class="form-group m-form__group ">
+                        <label class="col-form-label ">
+                            Ücret
+                        </label>
+
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+                            <div id="total-price"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="m-portlet__foot m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions">
+                        <div class="col-md-12 float-left">
+                            <br /><br />
+                            <div class="row">
+                                <div class="col-lg-9 ml-lg-auto">
+                                    <button type="submit" class="btn btn-success">
+                                        Kaydet
+                                    </button>
+                                    <button type="reset" class="btn btn-secondary">
+                                        Vazgeç
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        }
+
+        <script>
+
+
+
+            function calculateServicePrice() {
+
+                var total = 0;
+                // loop over them all
+                $("[data-id='filter-checkbox']:checked").each(function () {
+                    if (this.checked) {
+                        total += parseFloat(this.attributes["data-price"].value);
+                    }
+                });
+                document.getElementById("total-price").innerHTML = total.toFixed(2) + '&#8378;';
+
+            }
+            window.onload = calculateServicePrice;
+
+
+
+        </script>
+    </div>
+</div>
+

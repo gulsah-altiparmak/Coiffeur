@@ -1,0 +1,97 @@
+﻿@using CoiffeurApp.Models.CoiffeurModel
+@model ModelCoiffeur
+@{
+    ViewBag.Title = "ServiceView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-content">
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+        <!--begin::Form-->
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Hizmet Form
+                    </h3>
+                </div>
+            </div>
+        </div>
+        @using (@Html.BeginForm("ServiceView", "Service", FormMethod.Post, new { @class = "m-form m-form--fit m-form--label-align-right", @id = "m_form_1", enctype = "multipart/form-data" }))
+        {
+            <div class="m-portlet__body">
+
+                @Html.TextBoxFor(m => Model.Service.ServiceId, new { @class = "form-control m-input p-1 border border-primary", type = "hidden" })
+                <div class="col-md-6 float-left">
+                    <div class="form-group m-form__group ">
+                        <label class="col-form-label">
+                            Hizmet Başlığı
+                        </label>
+
+                        <div class="m-typeahead">
+                            @Html.TextBoxFor(m => Model.Service.Title, new { @class = "form-control m-input p-1 border border-primary" })
+
+                        </div>
+                    </div>
+                </div>
+         
+
+                <div class="col-md-6 float-left">
+                    <div class="form-group m-form__group ">
+                        <label class="col-form-label">
+                            Hizmet Süresi
+                        </label>
+                        <div>
+
+                            @Html.TextBoxFor(m => Model.Service.ServiceTime, new { @class = "form-control border border-primary p-1" })
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 float-left">
+                    <div class="form-group m-form__group ">
+                        <label class="col-form-label">
+                            Hizmet Fiyatı
+                        </label>
+                        <div>
+
+                            @Html.TextBoxFor(m => Model.Service.ServicePrice, new { @class = "form-control border border-primary p-1" })
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+ 
+
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class="col-md-12 float-left">
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-lg-9 ml-lg-auto">
+                                <button type="submit" class="btn btn-success">
+                                    Kaydet
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    Vazgeç
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <!--end::Form-->
+</div>
+
+
+
